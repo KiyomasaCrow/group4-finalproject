@@ -1,5 +1,5 @@
 <template>
-  <div @click="goDetail">
+  <div @click="goDetail" style="cursor: pointer;">
     <h3>{{ user.fullName }}</h3>
     <p>Email: {{ user.email }}</p>
     <p>Telefono: {{ user.phone }}</p>
@@ -10,7 +10,9 @@
 <script setup lang="ts">
 import type { User } from '@/types/models';
 import { useRouter } from 'vue-router';
-const props = defineProps<{ user: User }>();
+
+const { user } = defineProps<{ user: User }>();
 const router = useRouter();
-const goDetail = () => router.push(`/utenti/${props.user.id}`);
+
+const goDetail = () => router.push(`/utenti/${user.id}`);
 </script>

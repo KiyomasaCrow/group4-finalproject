@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>{{ product.name }}</h3>
+    <h3>{{ product.name }} (ID: {{ product.id }})</h3>
     <p>{{ product.description }}</p>
     <p>Prezzo: €{{ product.price.toFixed(2) }}</p>
     <p v-if="product.available">Disponibile</p>
