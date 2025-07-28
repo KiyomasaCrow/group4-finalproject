@@ -1,0 +1,24 @@
+{
+  "name": "eCommerce",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "node dist/app.js",
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^20.0.0",
+    "eslint": "^9.30.1",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.35.1"
+  }
+}
