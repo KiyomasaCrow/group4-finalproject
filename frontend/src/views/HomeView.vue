@@ -2,8 +2,4 @@
   <h1>Benvenuto nel progetto e-commerce</h1>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({});
-</script>
+<script setup lang="ts"></script>
