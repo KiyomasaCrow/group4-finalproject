@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import db from "../db/db";
+import { Order } from "../models/order";
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
     if (isNaN(id)) return res.status(400).json({ message: "Invalid user ID" });
 
-    const [rows] = await db.query(
+    const [rows] = await db.query<Order[]>(
       `
           SELECT
           u.name AS user_name,
