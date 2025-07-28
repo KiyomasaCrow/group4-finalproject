@@ -1,5 +1,6 @@
 <template>
-  <h1>Benvenuto nel progetto e-commerce</h1>
+  <h2>Prodotti</h2>
+  <!-- Qui poi metteremo la lista prodotti -->
 </template>
 
 <script lang="ts">
