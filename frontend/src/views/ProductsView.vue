@@ -1,5 +1,5 @@
 <template>
-  <h2>Prodotti</h2>
+  <h2 class="text-3xl font-bold underline">Prodotti</h2>
   <div v-if="products.length > 0">
     <p>Numero prodotti: {{ products.length }}</p>
     <ul>
@@ -8,6 +8,7 @@
       </li>
     </ul>
   </div>
+
   <div v-else>
     <p>Nessun prodotto caricato</p>
   </div>

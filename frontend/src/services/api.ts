@@ -79,11 +79,9 @@ export async function fetchUserOrders(userId: number): Promise<Order[]> {
 export const getAllProducts = async (): Promise<Product[]> => {
   try {
     const res = await axios.get(`${ECOMMERCE_URL}/products`)
-    return await res.data
+    return res.data
   } catch (error) {
     console.error('Errore nel recupero dei prodotti:', error)
-    // Fallback ai dati mock se il backend non è disponibile
-    console.log('Usando dati mock come fallback...')
-    return productsMock
+    throw error
   }
 }
