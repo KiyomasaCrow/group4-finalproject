@@ -1,32 +1,34 @@
 <template>
-  <nav class="navbar">
-    <div class="nav-links">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/prodotti">Prodotti</router-link> |
-      <router-link to="/utenti">Utenti</router-link>
-    </div>
+  <div>
+    <nav class="nav-bar">
+      <button class="nav-button"><router-link to="/">Home</router-link></button>
+      <button class="nav-button"><router-link to="/products">Prodotti</router-link></button>
+      <button class="nav-button"><router-link to="/users">Utenti</router-link></button>
+    </nav>
 
-    <div class="nav-actions">
-      <input v-model="searchQuery" placeholder="Cerca..." @keyup.enter="onSearch" />
-      <button @click="onSearch">Cerca</button>
-      <div class="cart-icon" @click="goToCart">🛒</div>
-    </div>
-  </nav>
+    <router-view :search="searchQuery" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue'
 
-const searchQuery = ref('');
-const router = useRouter();
-
-const onSearch = () => {
-  router.push({ path: '/prodotti', query: { q: searchQuery.value } });
-};
-
-const goToCart = () => {
-  router.push('/carrello'); // puoi crearla più avanti
-};
+const searchQuery = ref<string>('')
 </script>
 
+<style scoped>
+.nav-bar {
+  background-color: #f0f0f0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+</style>
