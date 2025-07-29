@@ -1,6 +1,8 @@
 <template>
-  <div v-if="product" class="border-2 bg-gray-400 p-4 rounded-lg shadow hover:bg-gray-500">
-    <h2 class="text-3xl font-semibold">Prodotto singolo</h2>
+  <div
+    v-if="product"
+    class="border-2 border-gray-50 bg-white p-4 rounded-lg shadow hover:bg-gray-100 m-3"
+  >
     <p class="text-lg">Nome: {{ product.name }}</p>
     <p class="text-lg">Descrizione: {{ product.description }}</p>
     <p class="text-lg">Prezzo: {{ product.price }} €</p>

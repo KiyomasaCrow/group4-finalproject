@@ -12,7 +12,10 @@
     </p>
 
     <div>
-      <a href="#" class="text-slate-800 font-semibold text-sm hover:underline flex items-center">
+      <a
+        class="text-slate-800 font-semibold text-sm hover:underline flex items-center cursor-pointer"
+        @click="onClick"
+      >
         Dettagli
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,5 +41,6 @@ import type { Product } from '@/types/models'
 
 defineProps<{
   product: Product
+  onClick: () => void
 }>()
 </script>

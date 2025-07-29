@@ -9,7 +9,7 @@
           class="input-search"
           v-model="searchQuery"
           placeholder="Cerca un prodotto..."
-          @keyup.enter="searchProduct"
+          @keyup.enter="searchProduct()"
         />
 
         <div v-if="route.query.name">
@@ -37,7 +37,12 @@
         v-if="products.length > 0"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 px-5"
       >
-        <ProductCard v-for="product in products" :key="product.id" :product="product" />
+        <ProductCard
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
+          :onClick="() => searchProduct(product.name)"
+        />
       </div>
       <div v-else class="text-center text-gray-500">
         <p>Nessun prodotto trovato</p>
@@ -73,10 +78,11 @@ const getProducts = async () => {
 }
 
 // funzione per cercare un prodotto
-const searchProduct = async () => {
-  if (searchQuery.value.trim() !== '') {
+const searchProduct = async (name?: string) => {
+  if (name && name.trim() !== '') router.push({ path: '/products', query: { name: name } })
+  else if (searchQuery.value && searchQuery.value.trim() !== '')
     router.push({ path: '/products', query: { name: searchQuery.value } })
-  }
+  else router.push({ path: '/products' })
 }
 
 // funzione per resettare la ricerca e mostrare tutti i prodotti
