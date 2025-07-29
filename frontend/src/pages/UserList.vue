@@ -9,13 +9,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import type { User } from '@/types/models';
-import Navbar from '@/components/Navbar.vue';
-import UserCard from '@/components/UserCard.vue';
-import { fetchUsers } from '@/services/api';
+import { ref, onMounted } from 'vue'
+import type { User } from '@/types/models'
+import Navbar from '@/components/Navbar.vue'
+import UserCard from '@/components/UserCard.vue'
+import { getUsersPurchases } from '@/services/api'
 
-const users = ref<User[]>([]);
-const load = async () => { users.value = await fetchUsers(); };
-onMounted(load);
+const users = ref<User[]>([])
+const load = async () => { users.value = await getUsersPurchases() }
+onMounted(load)
 </script>
