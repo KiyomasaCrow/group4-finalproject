@@ -54,7 +54,7 @@ router.get("/products/:id", async (req: Request, res: Response) => {
 router.post("/product", async (req: Request, res: Response) => {
   try {
     const { name, description, price, quantity } = req.body;
-    const [result] = await db.query(
+    const [result] = await db.query<Product[]>(
       "INSERT INTO products (name, description, price, quantity) VALUES (?, ?, ?, ?)",
       [name, description, price, quantity]
     );
@@ -80,7 +80,7 @@ router.put("/product/:id", async (req: Request, res: Response) => {
     if (isNaN(id))
       return res.status(400).json({ message: "Invalid product ID" });
 
-    const [result] = await db.query(
+    const [result] = await db.query<Product[]>(
       "UPDATE products SET name = ?, description = ?, price = ?, quantity = ? WHERE product_id = ?",
       [name, description, price, quantity, id]
     );
@@ -106,13 +106,12 @@ router.delete("/product/:id", async (req: Request, res: Response) => {
     if (isNaN(id))
       return res.status(400).json({ message: "Invalid product ID" });
 
-    const [result] = await db.query(
+    const [result] = await db.query<Product[]>(
       "DELETE FROM products WHERE product_id = ?",
       [id]
     );
 
-    if (!id)
-      res.status(404).json({ message: "Error deleting product" });
+    if (!id) res.status(404).json({ message: "Error deleting product" });
     else res.status(200).json(result);
   } catch (error) {
     console.log(error);

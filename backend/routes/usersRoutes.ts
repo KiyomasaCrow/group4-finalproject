@@ -1,16 +1,17 @@
 import { Router, Request, Response } from "express";
 import db from "../db/db";
+import { User } from "../models/users";
 
 const router = Router();
 
 /**
  * @description Get all users with purchases
- * @route GET /api/users
+ * @route GET /api/users/purchases
  * @access Public
  */
-router.get("/", async (req: Request, res: Response) => {
+router.get("/purchases", async (req: Request, res: Response) => {
   try {
-    const [rows] = await db.query(
+    const [rows] = await db.query<User[]>(
       `
         SELECT
           u.user_id,
