@@ -15,7 +15,7 @@
 import { getUsersPurchases } from '@/services/api'
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { User } from '@/types/models'
-import UserCard from '@/components/UserCard.vue'
+import UserCard from '@/components/users/UserCard.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

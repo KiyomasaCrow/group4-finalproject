@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import type { User } from '@/types/models'
-import UserCard from '@/components/UserCard.vue'
+import UserCard from '@/components/users/UserCard.vue'
 import { getUsersPurchases } from '@/services/api'
 
 const users = ref<User[]>([])
