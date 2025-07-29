@@ -22,20 +22,19 @@ router.get("/products", async (req: Request, res: Response) => {
 });
 
 /**
- * @description Get a product by id
- * @route GET /api/e-commerce/products/:id
+ * @description Get a product by name
+ * @route GET /api/e-commerce/products/:name
  * @access Public
  */
-router.get("/products/:id", async (req: Request, res: Response) => {
+router.get("/products/:name", async (req: Request, res: Response) => {
   try {
-    const id = Number(req.params.id);
+    const name = req.params.name;
 
-    if (isNaN(id))
-      return res.status(400).json({ message: "Invalid product ID" });
+    if (!name) return res.status(400).json({ message: "Invalid product name" });
 
     const [rows] = await db.query<Product[]>(
-      "SELECT * FROM products WHERE product_id = ?",
-      [id]
+      "SELECT * FROM products WHERE name = ?",
+      [name]
     );
 
     if (rows.length > 0) res.status(200).json(rows[0]);
