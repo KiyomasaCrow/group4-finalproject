@@ -4,6 +4,9 @@
       <button class="nav-button"><router-link to="/">Home</router-link></button>
       <button class="nav-button"><router-link to="/products">Prodotti</router-link></button>
       <button class="nav-button"><router-link to="/users">Utenti</router-link></button>
+      <button @click="$router.push('/cart')">
+        🛒 Carrello ({{ cartCount }})
+      </button>
     </nav>
 
     <router-view :search="searchQuery" />
@@ -12,8 +15,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useCart } from '@/components/cart/useCart' // aggiorna percorso se serve
 
 const searchQuery = ref<string>('')
+
+const { cartCount } = useCart()
 </script>
 
 <style scoped>

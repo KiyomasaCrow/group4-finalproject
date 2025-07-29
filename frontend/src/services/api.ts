@@ -20,13 +20,15 @@ export const getAllProducts = async (): Promise<Product[]> => {
 }
 
 /**
- * @description Recupera un prodotto per nome
- * @param name Nome del prodotto
+ * @description Recupera un prodotto per nome usando query params
+ * @param productName Nome del prodotto
  * @returns Prodotto
  */
 export const getProductByName = async (productName: string): Promise<Product> => {
   try {
-    const res = await axios.get(`${ECOMMERCE_URL}/products/${productName}`)
+    const res = await axios.get(`${ECOMMERCE_URL}/products`, {
+      params: { name: productName }
+    })
     return res.data
   } catch (error) {
     console.error('Errore nel recupero del prodotto:', error)

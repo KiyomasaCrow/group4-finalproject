@@ -33,14 +33,29 @@
         </svg>
       </a>
     </div>
+
+    <!-- Bottone Aggiungi al carrello -->
+    <button
+      class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+      @click="onAddClick"
+    >
+      Aggiungi al carrello
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Product } from '@/types/models'
+import { useCart } from '@/components/cart/useCart' // aggiorna il percorso se serve
 
-defineProps<{
+const { product, onClick } = defineProps<{
   product: Product
   onClick: () => void
 }>()
+
+const { addToCart } = useCart()
+
+function onAddClick() {
+  addToCart(product)
+}
 </script>
