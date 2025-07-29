@@ -1,16 +1,33 @@
 <template>
-  <div @click="goDetail">
-    <h3>{{ user.fullName }}</h3>
-    <p>Email: {{ user.email }}</p>
-    <p>Telefono: {{ user.phone }}</p>
-    <p>Indirizzo: {{ user.address }}</p>
+  <div
+    @click="$emit('select', user.id)"
+    class="border p-5 rounded-lg cursor-pointer bg-gray-100 hover:bg-gray-200 m-5"
+  >
+    <h3 class="text-2xl font-bold">{{ user.name }}</h3>
+    <div v-if="user.orders && user.orders.length > 0">
+      <h4 class="text-xl font-bold">Acquisti:</h4>
+      <ul>
+        <li v-for="order in user.orders" :key="order.id">
+          {{ order.productName }} - €{{ order.price }} - {{ formatDate(order.orderDate) }}
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      <p class="text-lg">Nessun acquisto effettuato.</p>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { User } from '@/types/models';
-import { useRouter } from 'vue-router';
-const props = defineProps<{ user: User }>();
-const router = useRouter();
-const goDetail = () => router.push(`/utenti/${props.user.id}`);
+import type { User } from '@/types/models'
+
+defineProps<{ user: User }>()
+
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString)
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const year = date.getFullYear()
+  return `${day}/${month}/${year}`
+}
 </script>

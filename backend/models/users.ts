@@ -1,4 +1,5 @@
 import { RowDataPacket } from "mysql2";
+import { Order } from "./order";
 
 export type User = RowDataPacket & {
   user_id: number;
@@ -6,4 +7,5 @@ export type User = RowDataPacket & {
   email: string;
   password: string;
   created_at: Date;
+  orders?: Order[];
 };

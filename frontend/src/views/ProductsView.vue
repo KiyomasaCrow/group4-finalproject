@@ -27,7 +27,7 @@ const getProducts = async () => {
     const res = await getAllProducts()
     products.value = res
   } catch (error) {
-    console.error('❌ Errore nel recupero dei prodotti:', error)
+    console.error('Errore nel recupero dei prodotti:', error)
   }
 }
 

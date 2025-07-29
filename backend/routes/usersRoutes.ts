@@ -31,8 +31,35 @@ router.get("/purchases", async (req: Request, res: Response) => {
         `
     );
 
-    if (!rows) res.status(404).json({ message: "No users found" });
-    else res.status(200).json(rows);
+    if (!rows || rows.length === 0)
+      res.status(404).json({ message: "Nessun acquisto trovato" });
+
+    const groupedUsers: Record<number, any> = {};
+
+    rows.forEach((row) => {
+      const userId = row.user_id;
+
+      if (!groupedUsers[userId]) {
+        groupedUsers[userId] = {
+          id: row.user_id,
+          name: row.user_name,
+          email: row.email,
+          orders: [],
+        };
+      }
+
+      groupedUsers[userId].orders.push({
+        id: row.order_id,
+        productId: row.product_id,
+        productName: row.product_name,
+        quantity: row.quantity,
+        price: row.price_at_purchase,
+        orderDate: row.order_date,
+      });
+    });
+
+    const result = Object.values(groupedUsers);
+    res.status(200).json(result);
   } catch (error) {
     console.error("Errore nel recupero utenti con acquisti:", error);
     res.status(500).json({ message: "Errore interno del server" });
