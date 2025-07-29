@@ -1,31 +1,47 @@
 <template>
-  <div>
-    <h2 class="text-3xl font-semibold">Prodotti</h2>
+  <div class="p-5">
+    <div class="flex gap-2 justify-between">
+      <h2 class="text-3xl font-semibold ml-3">Prodotti</h2>
 
-    <!-- Campo ricerca -->
-    <input
-      class="input-search"
-      v-model="searchQuery"
-      placeholder="Cerca..."
-      @keyup.enter="searchProduct"
-    />
+      <!-- Campo ricerca -->
+      <div class="flex gap-2 items-center">
+        <input
+          class="input-search"
+          v-model="searchQuery"
+          placeholder="Cerca un prodotto..."
+          @keyup.enter="searchProduct"
+        />
+
+        <div v-if="route.query.name">
+          <ButtonSearch label="Annulla ricerca" @click="resetSearch" />
+        </div>
+
+        <div v-else>
+          <ButtonSearch label="Cerca" @click="searchProduct" />
+        </div>
+      </div>
+    </div>
 
     <!-- Se c'è una ricerca, mostra solo quel prodotto -->
     <div v-if="route.query.name">
-      <ProductCard v-if="singleProduct" :product="singleProduct" />
-      <p v-else>Prodotto non trovato.</p>
-      <button @click="resetSearch">Annulla ricerca</button>
+      <SingleProduct v-if="singleProduct" :product="singleProduct" />
+
+      <div v-else class="text-center text-gray-500">
+        <p class="py-5">Nessun prodotto trovato</p>
+      </div>
     </div>
 
-    <!-- Se non c'è ricerca, mostra tutti i prodotti -->
+    <!-- Se non c'è il query name, mostra tutti i prodotti -->
     <div v-else>
-      <p v-if="products.length > 0">Numero prodotti: {{ products.length }}</p>
-      <ul v-if="products.length > 0">
-        <li v-for="product in products" :key="product.id">
-          {{ product.name }} - €{{ product.price }}
-        </li>
-      </ul>
-      <p v-else>Nessun prodotto caricato</p>
+      <div
+        v-if="products.length > 0"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 px-5"
+      >
+        <ProductCard v-for="product in products" :key="product.id" :product="product" />
+      </div>
+      <div v-else class="text-center text-gray-500">
+        <p>Nessun prodotto trovato</p>
+      </div>
     </div>
   </div>
 </template>
@@ -34,8 +50,10 @@
 import { ref, watch, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getAllProducts, getProductByName } from '@/services/api'
+import ProductCard from '@/components/product/ProductCard.vue'
+import SingleProduct from '@/components/product/SingleProduct.vue'
+import ButtonSearch from '@/components/product/ButtonSearch.vue'
 import type { Product } from '@/types/models'
-import ProductCard from '@/components/ProductCard.vue'
 
 const products = ref<Product[]>([])
 const searchQuery = ref<string>('')
@@ -93,6 +111,7 @@ watch(
   { immediate: true },
 )
 
+// funzione per resettare la ricerca quando si esce dalla pagina di ricerca
 onUnmounted(() => {
   products.value = []
   singleProduct.value = null
@@ -101,22 +120,16 @@ onUnmounted(() => {
 
 <style scoped>
 .input-search {
-  margin-top: 1rem;
-  padding: 0.5rem;
+  flex: 1;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-  max-width: 300px;
-  display: block;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s ease;
 }
 
-button {
-  margin-top: 1rem;
-  padding: 0.4rem 1rem;
-  background-color: #ddd;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
+.input-search:focus {
+  border-color: #4b5563;
 }
 </style>
