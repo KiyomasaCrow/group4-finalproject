@@ -66,4 +66,27 @@ router.get("/purchases", async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @description Get user by ID
+ * @route GET /api/users/:id
+ * @access Public
+ */
+router.get("/:id", async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) return res.status(400).json({ message: "ID non valido" });
+
+  try {
+    const [rows] = await db.query<User[]>(
+      "SELECT * FROM users WHERE user_id = ?",
+      [id]
+    );
+
+    if (rows.length > 0) res.status(200).json(rows[0]);
+    else res.status(404).json({ message: "Utente non trovato" });
+  } catch (error) {
+    console.error("Errore nel recupero dell'utente:", error);
+    res.status(500).json({ message: "Errore interno del server" });
+  }
+});
+
 export default router;

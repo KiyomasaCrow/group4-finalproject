@@ -1,10 +1,13 @@
 <template>
-  <h2 class="text-3xl font-semibold">Utenti</h2>
-  <div v-if="users.length > 0">
-    <UserCard v-for="user in users" :key="user.id" :user="user" @select="goToDetail" />
-  </div>
-  <div v-else>
-    <p>Nessun utente ha ancora acquistato un prodotto</p>
+  <div class="p-5">
+    <h2 class="text-3xl font-semibold ml-3">Utenti</h2>
+    <div v-if="users.length > 0">
+      <UserCard v-for="user in users" :key="user.id" :user="user" @select="goToDetail" />
+    </div>
+
+    <div v-else>
+      <p class="text-center text-gray-500">Nessun utente ha ancora acquistato un prodotto</p>
+    </div>
   </div>
 </template>
 
@@ -30,7 +33,7 @@ const getUsers = async () => {
 
 // funzione per navigare alla pagina di dettaglio dell'utente
 const goToDetail = (userId: number) => {
-  router.push(`/utenti/${userId}`)
+  router.push(`/users/${userId}`)
 }
 
 // funzione per far visualizzare gli utenti quando il DOM renderizza il componente
