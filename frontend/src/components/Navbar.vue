@@ -36,5 +36,16 @@ const { cartCount } = useCart()
   background: none;
   border: none;
   cursor: pointer;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-button:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 </style>

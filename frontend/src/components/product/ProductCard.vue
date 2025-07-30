@@ -6,10 +6,17 @@
       <h5 class="text-slate-800 text-xl font-semibold">{{ product.name }}</h5>
     </div>
 
-    <p class="text-slate-800 font-semibold">Descrizione:</p>
-    <p class="block text-slate-600 leading-normal font-light mb-4">
-      {{ product.description }}
-    </p>
+    <div>
+      <p class="text-slate-800 font-semibold">Descrizione:</p>
+      <p class="block text-slate-600 leading-normal font-light mb-4">
+        {{ product.description }}
+      </p>
+
+      <p class="text-slate-800 font-semibold">Prezzo:</p>
+      <p class="block text-slate-600 leading-normal font-light mb-4">
+        {{ product.price }} €
+      </p>
+    </div>
 
     <div>
       <a

@@ -1,8 +1,21 @@
+<template>
+  <div class="p-5">
+    <h2 class="text-3xl font-semibold ml-3">Utenti</h2>
+    <div v-if="users.length > 0">
+      <UserCard v-for="user in users" :key="user.id" :user="user" @select="goToDetail" />
+    </div>
+
+    <div v-else>
+      <p class="text-center text-gray-500">Nessun utente ha ancora acquistato un prodotto</p>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { getUsersPurchases } from '@/services/api'
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { User } from '@/types/models'
-import UserCard from '@/components/UserCard.vue'
+import UserCard from '@/components/users/UserCard.vue'
 import { useRouter } from 'vue-router'
 
 // Dichiara che accetti la prop search (opzionale)
@@ -21,7 +34,7 @@ const getUsers = async () => {
 }
 
 const goToDetail = (userId: number) => {
-  router.push(`/utenti/${userId}`)
+  router.push(`/users/${userId}`)
 }
 
 onMounted(() => {

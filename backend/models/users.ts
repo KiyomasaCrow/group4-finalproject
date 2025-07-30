@@ -5,6 +5,8 @@ export type User = RowDataPacket & {
   user_id: number;
   name: string;
   email: string;
+  phone: string;
+  address: string;
   password: string;
   created_at: Date;
   orders?: Order[];

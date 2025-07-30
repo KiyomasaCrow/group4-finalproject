@@ -97,6 +97,22 @@ export const getUsersPurchases = async (): Promise<User[]> => {
 }
 
 /**
+ * @description Recupera un utente per ID
+ * @param userId ID dell'utente
+ * @returns Utente
+ */
+export const getUserById = async (userId: number): Promise<User> => {
+  const id = Number(userId)
+  try {
+    const res = await axios.get(`${USERS_URL}/${id}`)
+    return res.data
+  } catch (error) {
+    console.error("Errore nel recupero dell'utente:", error)
+    throw error
+  }
+}
+
+/**
  * @description Recupera gli ordini per ID utente
  * @param userId ID dell'utente
  * @returns Array di ordini

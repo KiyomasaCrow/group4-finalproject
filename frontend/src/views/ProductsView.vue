@@ -79,7 +79,8 @@ const getProducts = async () => {
 
 // funzione per cercare un prodotto
 const searchProduct = async (name?: string) => {
-  if (name && name.trim() !== '') router.push({ path: '/products', query: { name: name } })
+  if (typeof name === 'string' && name.trim() !== '')
+    router.push({ path: '/products', query: { name: name } })
   else if (searchQuery.value && searchQuery.value.trim() !== '')
     router.push({ path: '/products', query: { name: searchQuery.value } })
   else router.push({ path: '/products' })
