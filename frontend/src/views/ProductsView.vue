@@ -1,7 +1,7 @@
 <template>
   <div class="p-5">
-    <div class="flex gap-2 justify-between">
-      <h2 class="text-3xl font-semibold ml-3">Prodotti</h2>
+    <div class="flex gap-2 justify-center">
+      <h2 class="text-3xl font-semibold ml-3">Esplora prodotti</h2>
 
       <!-- Campo ricerca -->
       <div class="flex gap-2 items-center">

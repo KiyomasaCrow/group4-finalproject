@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex flex-col justify-around my-6 bg-white hover:bg-gray-100 shadow-sm border border-slate-200 rounded-lg w-96 p-6"
-  >
+  <BaseCard>
     <div class="flex items-center mb-4">
       <h5 class="text-slate-800 text-xl font-semibold">{{ product.name }}</h5>
     </div>
@@ -41,19 +39,19 @@
       </a>
     </div>
 
-    <!-- Bottone Aggiungi al carrello -->
     <button
-      class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+      class="mt-4 button-search bg-cyan-700 hover:bg-cyan-900 text-white font-semibold py-2 px-4 rounded"
       @click="onAddClick"
     >
       Aggiungi al carrello
     </button>
-  </div>
+  </BaseCard>
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@/types/models'
-import { useCart } from '@/components/cart/useCart' // aggiorna il percorso se serve
+import BaseCard from '../BaseCard.vue'
+import type { Product } from '../../types/models'
+import { useCart } from '../cart/useCart'
 
 const { product, onClick } = defineProps<{
   product: Product
@@ -61,8 +59,6 @@ const { product, onClick } = defineProps<{
 }>()
 
 const { addToCart } = useCart()
-
-console.log('Adding to cart:', product)
 
 function onAddClick() {
   addToCart(product)
