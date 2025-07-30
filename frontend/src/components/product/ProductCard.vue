@@ -57,10 +57,12 @@ import { useCart } from '@/components/cart/useCart' // aggiorna il percorso se s
 
 const { product, onClick } = defineProps<{
   product: Product
-  onClick: () => void
+  onClick?: () => void
 }>()
 
 const { addToCart } = useCart()
+
+console.log('Adding to cart:', product)
 
 function onAddClick() {
   addToCart(product)

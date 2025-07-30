@@ -39,7 +39,7 @@
       >
         <ProductCard
           v-for="product in products"
-          :key="product.id"
+          :key="product.product_id"
           :product="product"
           :onClick="() => searchProduct(product.name)"
         />
@@ -101,7 +101,8 @@ watch(
       searchQuery.value = name
       try {
         const product = await getProductByName(name)
-        singleProduct.value = product
+        singleProduct.value = Array.isArray(product) ? product[0] : product
+        console.log('Single product:', singleProduct.value)
         products.value = [] // Nasconde la lista completa
       } catch (error) {
         console.error('Prodotto non trovato')
