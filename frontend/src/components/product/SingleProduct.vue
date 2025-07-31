@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="product"
-    class="border-2 border-[color:var(--color-border)] bg-[color:var(--color-background)] p-4 rounded-lg shadow hover:bg-[color:var(--color-background-soft)] transition-colors m-3"
+    class="border-2 border-[color:var(--color-border)] bg-[color:var(--text-color)] p-4 rounded-lg shadow transition-colors m-3"
   >
     <p class="text-lg text-[color:var(--color-text)]">Nome: {{ product.name }}</p>
     <p class="text-lg text-[color:var(--color-text)]">Descrizione: {{ product.description }}</p>
