@@ -1,0 +1,23 @@
+[33m7625cb0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/backend-connection[m[33m)[m HEAD@{0}: reset: moving to HEAD@{1}
+[33m265eeea[m HEAD@{1}: commit: colori css impostati e debug barra ricerca prodotti
+[33m7625cb0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/backend-connection[m[33m)[m HEAD@{2}: commit: css modify
+[33mccc3969[m HEAD@{3}: commit: fixing darkmode
+[33m5db53f6[m HEAD@{4}: reset: moving to HEAD
+[33m5db53f6[m HEAD@{5}: reset: moving to HEAD
+[33m5db53f6[m HEAD@{6}: commit: modifiche Home e CSS
+[33ma7084f0[m HEAD@{7}: commit: Cart and pages update
+[33m019c74c[m HEAD@{8}: commit (merge): Merge branch 'feature/backend-connection' of https://github.com/KiyomasaCrow/group4-finalproject into feature/backend-connection
+[33m0ffffa9[m HEAD@{9}: commit: aggiunta carrello (da completare)
+[33m7437b47[m HEAD@{10}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m474860c[m HEAD@{11}: reset: moving to HEAD
+[33m474860c[m HEAD@{12}: commit (merge): Merge branch 'feature/backend-connection' of https://github.com/KiyomasaCrow/group4-finalproject into feature/backend-connection
+[33m42b90cc[m HEAD@{13}: commit (merge): Merge branch 'feature/backend-connection' of https://github.com/KiyomasaCrow/group4-finalproject into feature/backend-connection
+[33m2168afc[m HEAD@{14}: pull --ff --recurse-submodules --progress origin: Merge made by the 'ort' strategy.
+[33m97e57aa[m HEAD@{15}: pull origin feature/backend-connection: Merge made by the 'ort' strategy.
+[33mc459f37[m HEAD@{16}: commit: aggiornamento frontend
+[33mc5ed9a7[m HEAD@{17}: pull origin feature/backend-connection: Fast-forward
+[33m3a90446[m HEAD@{18}: checkout: moving from feature/backend-connection to feature/backend-connection
+[33m3a90446[m HEAD@{19}: commit: creazione frontend base
+[33mb54c5c6[m HEAD@{20}: checkout: moving from main to feature/backend-connection
+[33mb54c5c6[m HEAD@{21}: pull: Fast-forward
+[33me0c00a4[m HEAD@{22}: commit (initial): Initial commit
