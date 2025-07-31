@@ -11,10 +11,17 @@ const router = Router();
  */
 router.get("/products", async (req: Request, res: Response) => {
   try {
-    const [rows] = await db.query<Product[]>("SELECT * FROM products");
-
-    if (rows.length > 0) res.status(200).json(rows);
-    else res.status(404).json({ message: "No products found" });
+    const name = req.query.name as string | undefined;
+    let rows;
+    if (name && name.trim() !== "") {
+      [rows] = await db.query<Product[]>("SELECT * FROM products WHERE name LIKE ?", [`%${name}%`]);
+      if (rows.length > 0) res.status(200).json(rows);
+      else res.status(404).json({ message: "Product not found" });
+    } else {
+      [rows] = await db.query<Product[]>("SELECT * FROM products");
+      if (rows.length > 0) res.status(200).json(rows);
+      else res.status(404).json({ message: "No products found" });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error fetching products" });
@@ -115,6 +122,96 @@ router.delete("/product/:id", async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error deleting product" });
+  }
+});
+
+/**
+ * @description Get product by name with enhanced response
+ * @route GET /api/e-commerce/product/lookup/:name
+ * @access Public
+ */
+router.get("/product/lookup/:name", async (req: Request, res: Response) => {
+  try {
+    const name = req.params.name;
+
+    if (!name) return res.status(400).json({ message: "Invalid product name" });
+
+    const [rows] = await db.query<Product[]>(
+      "SELECT * FROM products WHERE name = ?",
+      [name]
+    );
+
+    if (rows.length === 1) {
+      res.status(200).json(rows[0]);
+    } else if (rows.length > 1) {
+      // If multiple products found, return all of them
+      res.status(200).json(rows);
+    } else {
+      res.status(404).json({ message: "Product not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching product" });
+  }
+});
+
+/**
+ * @description Get product by name with enhanced response
+ * @route GET /api/e-commerce/product/lookup/:name
+ * @access Public
+ */
+router.get("/product/lookup/:name", async (req: Request, res: Response) => {
+  try {
+    const name = req.params.name;
+
+    if (!name) return res.status(400).json({ message: "Invalid product name" });
+
+    const [rows] = await db.query<Product[]>(
+      "SELECT * FROM products WHERE name = ?",
+      [name]
+    );
+
+    if (rows.length === 1) {
+      res.status(200).json(rows[0]);
+    } else if (rows.length > 1) {
+      // If multiple products found, return all of them
+      res.status(200).json(rows);
+    } else {
+      res.status(404).json({ message: "Product not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching product" });
+  }
+});
+
+/**
+ * @description Get product by name with enhanced response
+ * @route GET /api/e-commerce/product/lookup/:name
+ * @access Public
+ */
+router.get("/product/lookup/:name", async (req: Request, res: Response) => {
+  try {
+    const name = req.params.name;
+
+    if (!name) return res.status(400).json({ message: "Invalid product name" });
+
+    const [rows] = await db.query<Product[]>(
+      "SELECT * FROM products WHERE name = ?",
+      [name]
+    );
+
+    if (rows.length === 1) {
+      res.status(200).json(rows[0]);
+    } else if (rows.length > 1) {
+      // If multiple products found, return all of them
+      res.status(200).json(rows);
+    } else {
+      res.status(404).json({ message: "Product not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching product" });
   }
 });
 

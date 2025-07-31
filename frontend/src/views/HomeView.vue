@@ -8,7 +8,7 @@
     <div class="textbox description-box">
       <h2>Descrizione del progetto</h2>
       <p>
-        Questo progetto è un'applicazione e-commerce sviluppata con Vue 3 e TypeScript,
+        Questo progetto è un'applicazione e-commerce sviluppata con Vue e TypeScript,
         che permette agli utenti di navigare tra diversi prodotti tech e gestire un carrello digitale.
       </p>
     </div>

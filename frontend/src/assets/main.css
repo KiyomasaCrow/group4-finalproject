@@ -1,102 +1,21 @@
-@import './base.css';
 
-/* === Variabili per light/dark mode === */
+
 :root {
-  --bg-color: #ffffff;
-  --text-color: #222222;
-  --card-bg: #f9f9f9;
-  --link-color: hsla(160, 100%, 37%, 1);
-  --link-hover-bg: hsla(160, 100%, 37%, 0.2);
+  --body-bg: #dbe8f7;              /* slate-50 */
+  --card-bg: #c2d0df;              /* slate-100 */
+  --card-hover-bg: #a4afbe;        /* slate-200 */
+  --text-color: #212a36;           /* slate-700 */
+  --border-color: #7a838d;         /* slate-200 */
 }
 
 html.dark {
-  --bg-color: #121212;
-  --text-color: #eeeeee;
-  --card-bg: #1e1e1e;
-  --link-color: #80ffcc;
-  --link-hover-bg: rgba(128, 255, 204, 0.2);
+  --body-bg: #22344e;              /* darkmode: blu chiaro */
+  --card-bg: #1e293b;              /* slate-800 */
+  --card-hover-bg: #334155;        /* slate-700 */
+  --text-color: #f1f5f9;           /* slate-100 */
+  --border-color: #475569;         /* slate-600 */
 }
 
-/* === App container === */
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-/* === Body === */
 body {
-display: block;
-margin: 8px;
-background-color: red !important;
-color: var(--text-color);
-transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-html {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* === Link === */
-a,
-.green {
-  text-decoration: none;
-  color: var(--link-color);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: var(--link-hover-bg);
-  }
-}
-
-/* === Layout su schermi grandi === */
-@media (min-width: 1024px) {
-  body {
-    display: block;
-  }
-
-  #app {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    display: block;
-  }
-}
-
-/* === Navbar e bottoni === */
-.nav-bar {
-  background-color: var(--card-bg);
-  border-bottom: 1px solid #ccc;
-  transition: background-color 0.3s ease;
-}
-
-.nav-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-color);
-  font-weight: 600;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.nav-button:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
-
-/* === Card generiche (opzionale) === */
-.card, .box, .panel {
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  border: 1px solid rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--body-bg);
 }

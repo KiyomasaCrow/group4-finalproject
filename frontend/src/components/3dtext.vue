@@ -44,7 +44,7 @@ onMounted(() => {
     const pulsingMaterials: THREE.MeshStandardMaterial[] = []
 
     // Colori da interpolare
-    const darkBlue = new THREE.Color('#1976d2') // lighter blue
+    const cyanButton = new THREE.Color('#0891b2') // ciano scuro, simile ai bottoni
     const vinaccia = new THREE.Color(0x800020)
 
     // Load 3D model (.glb)
@@ -62,10 +62,10 @@ onMounted(() => {
             if ((child as THREE.Mesh).isMesh) {
                 const mesh = child as THREE.Mesh
                 const mat = new THREE.MeshStandardMaterial({
-                    color: 0x0d47a1,
-                    metalness: 0.7,
+                    color: cyanButton,
+                    metalness: 0.8,
                     roughness: 0.3,
-                    emissive: darkBlue.clone(),
+                    emissive: cyanButton.clone(),
                     emissiveIntensity: 0.6,
                 })
                 mesh.material = mat
@@ -80,19 +80,19 @@ onMounted(() => {
 
     const clock = new THREE.Clock()
 
-    // Luce rosa mobile da destra a sinistra
-    const pinkLight = new THREE.DirectionalLight(0xff66cc, 1)
-    pinkLight.position.set(5, 0, 5)
-    scene.add(pinkLight)
+    // Luce magenta mobile da destra a sinistra
+    const magentaLight = new THREE.DirectionalLight(0xff33cc, 3) // magenta più intenso
+    magentaLight.position.set(5, 0, 5)
+    scene.add(magentaLight)
 
     function animate() {
         requestAnimationFrame(animate)
 
         const elapsed = clock.getElapsedTime()
 
-        // Oscillazione della luce rosa da destra a sinistra
-        const xPos = Math.sin(elapsed * 1.5) * 5
-        pinkLight.position.set(xPos, 0, 5)
+        // Oscillazione della luce magenta da destra a sinistra (ROM aumentato di 1)
+        const xPos = Math.sin(elapsed * 1.5) * 6 // era 5, ora 6
+        magentaLight.position.set(xPos, 0, 5)
 
         renderer.render(scene, camera)
     }

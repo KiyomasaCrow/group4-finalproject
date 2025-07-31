@@ -5,20 +5,18 @@
 
       <!-- Campo ricerca -->
       <div class="flex gap-2 items-center">
-        <input
-          class="input-search bg-[color:var(--color-background-soft)] text-[color:var(--color-text)] border border-[color:var(--color-border)]"
-          v-model="searchQuery"
-          placeholder="Cerca un prodotto..."
-          @keyup.enter="searchProduct()"
-        />
-
-        <div v-if="route.query.name">
-          <ButtonSearch label="Annulla ricerca" @click="resetSearch" />
-        </div>
-
-        <div v-else>
+        <template v-if="!route.query.name">
+          <input
+            class="input-search bg-[color:var(--color-background-soft)] text-[color:var(--color-text)] border border-[color:var(--color-border)]"
+            v-model="searchQuery"
+            placeholder="Cerca un prodotto..."
+            @keyup.enter="searchProduct()"
+          />
           <ButtonSearch label="Cerca" @click="searchProduct" />
-        </div>
+        </template>
+        <template v-else>
+          <ButtonSearch label="Annulla ricerca" @click="resetSearch" />
+        </template>
       </div>
     </div>
 
@@ -78,13 +76,15 @@ const getProducts = async () => {
   }
 }
 
-// funzione per cercare un prodotto
+// funzione per cercare un prodotto (solo su click, non su input)
 const searchProduct = async (name?: string) => {
-  if (typeof name === 'string' && name.trim() !== '')
+  if (typeof name === 'string' && name.trim() !== '') {
     router.push({ path: '/products', query: { name: name } })
-  else if (searchQuery.value && searchQuery.value.trim() !== '')
+  } else if (searchQuery.value && searchQuery.value.trim() !== '') {
+    // Solo su click, aggiorna la query del router
     router.push({ path: '/products', query: { name: searchQuery.value } })
-  else router.push({ path: '/products' })
+  }
+  // Non fare nulla se la barra è vuota
 }
 
 // funzione per resettare la ricerca e mostrare tutti i prodotti
@@ -94,31 +94,48 @@ const resetSearch = () => {
   singleProduct.value = null
 }
 
-// Osserva il parametro nella query (?name=...)
-watch(
-  () => route.query.name,
-  async (name) => {
-    if (typeof name === 'string' && name.trim() !== '') {
-      searchQuery.value = name
+
+// Ricerca reattiva: aggiorna la lista prodotti solo se non si sta visualizzando il singolo prodotto
+watch(searchQuery, async (query) => {
+  if (!route.query.name) {
+    if (query && query.trim() !== '') {
       try {
-        const product = await getProductByName(name)
-        singleProduct.value = Array.isArray(product) ? product[0] : product
-        console.log('Single product:', singleProduct.value)
-        products.value = [] // Nasconde la lista completa
-      } catch (error) {
-        console.error('Prodotto non trovato')
+        // Cerca solo prodotti che contengono la query nel nome
+        const productsFound = await getAllProducts()
+        products.value = productsFound.filter(p => p.name.toLowerCase().includes(query.toLowerCase()))
         singleProduct.value = null
-        throw error
+      } catch (error) {
+        products.value = []
+        singleProduct.value = null
       }
     } else {
-      // Se non c'è un nome nella query, carica tutti
-      searchQuery.value = ''
-      singleProduct.value = null
       await getProducts()
+      singleProduct.value = null
     }
-  },
-  { immediate: true },
-)
+  }
+}, { immediate: true })
+
+// AGGIUNTA: watcher sulla query del router per mostrare il singolo prodotto
+watch(() => route.query.name, async (name) => {
+  if (typeof name === 'string' && name.trim() !== '') {
+    try {
+      const productsFound = await getProductByName(name)
+      if (Array.isArray(productsFound)) {
+        // Cerca il prodotto con nome esatto
+        const found = productsFound.find(p => p.name === name)
+        singleProduct.value = found || productsFound[0] || null
+      } else if (productsFound) {
+        singleProduct.value = productsFound
+      } else {
+        singleProduct.value = null
+      }
+    } catch (error) {
+      singleProduct.value = null
+    }
+  } else {
+    singleProduct.value = null
+  }
+}, { immediate: true })
 
 // funzione per resettare la ricerca quando si esce dalla pagina di ricerca
 onUnmounted(() => {
@@ -139,6 +156,11 @@ onUnmounted(() => {
   background-color: var(--color-background-soft);
   color: var(--color-text);
   border: 1px solid var(--color-border);
+ }
+
+ .input-search::placeholder {
+   color: var(--text-color);
+   opacity: 0.7;
 }
 
 .input-search:focus {
