@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <h2 class="text-3xl font-semibold text-center mb-6 text-gray-800 dark:text-gray-100">
+    <h2 class="text-3xl font-semibold text-center mb-6" style="color: var(--text-color);">
       Lista utenti
     </h2>
 

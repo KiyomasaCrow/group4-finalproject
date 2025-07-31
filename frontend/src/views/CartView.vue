@@ -1,5 +1,7 @@
 <script setup lang="ts">
+
 import { useCart } from '@/components/cart/useCart'
+import { ref, watchEffect } from 'vue'
 
 const {
   cart,
@@ -8,6 +10,8 @@ const {
   removeFromCart,
   totalPrice
 } = useCart()
+
+
 
 const formatPrice = (price: number) => price.toFixed(2)
 </script>
@@ -63,7 +67,7 @@ const formatPrice = (price: number) => price.toFixed(2)
 h1 {
   text-align: center;
   margin-bottom: 2rem;
-  color: #333;
+  color: var(--text-color);
   font-size: 2rem; /* aumentata da default a 2.8rem */
   font-weight: 600;
 }
@@ -116,8 +120,8 @@ h1 {
   gap: 0.5rem;
 }
 
-.quantity-control button {
-  background-color: #e0e0e0;
+ .quantity-control button {
+  background-color: var(--card-bg);
   border: none;
   padding: 0.3rem 0.7rem;
   border-radius: 6px;
@@ -126,13 +130,13 @@ h1 {
   transition: background 0.2s;
 }
 
-.quantity-control button:hover {
-  background-color: #d0d0d0;
+ .quantity-control button:hover {
+  background-color: var(--card-hover-bg);
 }
 
 .remove-btn {
-  background-color: #e0e0e0;
-  color: #a00;
+  background-color: var(--card-bg);
+  color: var(--text-error, #a00);
   border: none;
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
@@ -144,7 +148,7 @@ h1 {
 }
 
 .remove-btn:hover {
-  background-color: #d0d0d0;
+  background-color: var(--card-hover-bg);
 }
 
 .total-price {
@@ -158,6 +162,6 @@ h1 {
 .empty-message {
   text-align: center;
   font-size: 1.1rem;
-  color: var(--text-muted);
+  color: var(--text-color);
 }
 </style>

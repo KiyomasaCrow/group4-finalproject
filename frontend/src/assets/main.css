@@ -9,7 +9,7 @@
   --link-hover-bg: hsla(160, 100%, 37%, 0.2);
 }
 
-.dark {
+html.dark {
   --bg-color: #121212;
   --text-color: #eeeeee;
   --card-bg: #1e1e1e;
@@ -29,10 +29,11 @@
 
 /* === Body === */
 body {
-  margin: 0;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+display: block;
+margin: 8px;
+background-color: red !important;
+color: var(--text-color);
+transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html {
@@ -57,14 +58,14 @@ a,
 /* === Layout su schermi grandi === */
 @media (min-width: 1024px) {
   body {
-    display: flex;
-    place-items: center;
+    display: block;
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    display: block;
   }
 }
 

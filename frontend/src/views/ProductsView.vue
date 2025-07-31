@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 min-h-screen bg-[color:var(--color-background)] transition-colors">
     <div class="flex gap-2 justify-center">
-      <h2 class="text-3xl font-semibold ml-3 text-[color:var(--color-text)]">Esplora prodotti</h2>
+      <h2 class="text-3xl font-semibold ml-3" style="color: var(--text-color);">Esplora prodotti</h2>
 
       <!-- Campo ricerca -->
       <div class="flex gap-2 items-center">

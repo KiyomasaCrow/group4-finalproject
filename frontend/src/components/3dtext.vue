@@ -44,7 +44,7 @@ onMounted(() => {
     const pulsingMaterials: THREE.MeshStandardMaterial[] = []
 
     // Colori da interpolare
-    const darkBlue = new THREE.Color('#0d47a1')
+    const darkBlue = new THREE.Color('#1976d2') // lighter blue
     const vinaccia = new THREE.Color(0x800020)
 
     // Load 3D model (.glb)

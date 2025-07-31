@@ -16,9 +16,9 @@
     <div class="textbox developers-box">
       <h2>Developers</h2>
       <ul>
-        <li>Roberto Dimatteo</li>
-        <li>Danilo Licciardello</li>
-        <li>Amedeo Ruggiero</li>
+        <li>Roberto Dimatteo 🪦</li>
+        <li>Danilo Licciardello ☀️</li>
+        <li>Amedeo Ruggiero 🛵</li>
       </ul>
     </div>
   </div>

@@ -33,3 +33,9 @@ onMounted(async () => {
 
 });
 </script>
+
+<style scoped>
+div {
+  background-color: var(--color-background);
+}
+</style>
