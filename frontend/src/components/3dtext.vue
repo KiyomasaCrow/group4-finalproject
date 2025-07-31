@@ -49,13 +49,13 @@ onMounted(() => {
 
     // Load 3D model (.glb)
     const loader = new GLTFLoader()
-    loader.load('/3Dtext_2.glb', (gltf) => {
+    loader.load('/3Dtext_3.glb', (gltf) => {
         const model = gltf.scene
 
         // Ruota modello di 90° sull'asse X
         model.rotation.x = Math.PI / 2
 
-        model.scale.set(1.1, 1.1, 1.1)
+        model.scale.set(4, 1, 4)
 
         // Cambia materiale a MeshStandardMaterial blu scuro lucido e memorizza materiali
         model.traverse((child) => {
@@ -103,8 +103,8 @@ onMounted(() => {
 
 <style scoped>
 .threejs-container {
-    width: 800px;
-    height: 440px;
+    width: 250px;
+    height: 100px;
     background: transparent;
     /* sfondo trasparente */
     margin: 0 auto;

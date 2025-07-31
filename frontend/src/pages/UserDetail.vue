@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <h2>Ordini di {{ user?.fullName }}</h2>
+    <h2>Ordini di {{ user?.name }}</h2>
     <div v-if="orders.length === 0">Nessun prodotto acquistato.</div>
     <ul v-else>
       <li v-for="o in orders" :key="o.id">
@@ -17,7 +17,8 @@ import { useRoute } from 'vue-router';
 import Navbar from '@/components/Navbar.vue';
 import type { User } from '@/types/models';
 import type { Order } from '@/types/models';
-import { fetchUserById, fetchUserOrders } from '@/services/api';
+/* import { fetchUserById, fetchUserOrders } from '@/services/api'; */
+import { getUserById, getOrdersByUserId } from '@/services/api';
 
 const route = useRoute();
 const userId = Number(route.params.id);
@@ -25,7 +26,10 @@ const user = ref<User | null>(null);
 const orders = ref<Order[]>([]);
 
 onMounted(async () => {
-  user.value = await fetchUserById(userId);
-  orders.value = await fetchUserOrders(userId);
+/*   user.value = await fetchUserById(userId);
+  orders.value = await fetchUserOrders(userId); */
+  user.value = await getUserById(userId)
+  orders.value = await getOrdersByUserId(userId)
+
 });
 </script>

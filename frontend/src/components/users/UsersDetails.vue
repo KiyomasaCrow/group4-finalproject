@@ -3,7 +3,14 @@
     <h2 class="text-3xl font-semibold mb-4">Dettagli utente: {{ user?.name }}</h2>
 
     <div v-if="user">
-      <div class="bg-white p-6 rounded shadow-md w-full max-w-xl">
+      <div
+        class="p-6 rounded shadow-md w-full max-w-xl transition-colors duration-300"
+        :style="{
+          backgroundColor: 'var(--card-bg)',
+          color: 'var(--text-color)',
+          boxShadow: 'var(--box-shadow)'
+        }"
+      >
         <p><strong>Nome:</strong> {{ user.name }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Telefono:</strong> {{ user.phone }}</p>
@@ -12,7 +19,9 @@
       </div>
     </div>
 
-    <div v-else class="text-center text-gray-500">Caricamento utente...</div>
+    <div class="text-center mt-6" :style="{ color: 'var(--muted-text)' }" v-else>
+      Caricamento utente...
+    </div>
   </div>
 </template>
 
@@ -46,3 +55,19 @@ onUnmounted(() => {
   user.value = null
 })
 </script>
+
+<style scoped>
+:root {
+  --card-bg: #ffffff;       /* light mode sfondo */
+  --text-color: #1e293b;    /* slate-800 */
+  --muted-text: #64748b;    /* slate-500 */
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+html.dark {
+  --card-bg: #1e293b;       /* slate-800 */
+  --text-color: #f1f5f9;    /* slate-100 */
+  --muted-text: #94a3b8;    /* slate-400 */
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+</style>

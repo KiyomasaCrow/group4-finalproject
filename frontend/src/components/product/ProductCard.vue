@@ -1,24 +1,26 @@
 <template>
   <BaseCard>
     <div class="flex items-center mb-4">
-      <h5 class="text-slate-800 text-xl font-semibold">{{ product.name }}</h5>
+      <h5 class="text-xl font-semibold text-[color:var(--color-text)]">
+        {{ product.name }}
+      </h5>
     </div>
 
     <div>
-      <p class="text-slate-800 font-semibold">Descrizione:</p>
-      <p class="block text-slate-600 leading-normal font-light mb-4">
+      <p class="font-semibold text-[color:var(--color-text)]">Descrizione:</p>
+      <p class="block leading-normal font-light mb-4 text-[color:var(--color-text)] opacity-80">
         {{ product.description }}
       </p>
 
-      <p class="text-slate-800 font-semibold">Prezzo:</p>
-      <p class="block text-slate-600 leading-normal font-light mb-4">
+      <p class="font-semibold text-[color:var(--color-text)]">Prezzo:</p>
+      <p class="block leading-normal font-light mb-4 text-[color:var(--color-text)] opacity-80">
         {{ product.price }} €
       </p>
     </div>
 
     <div>
       <a
-        class="text-slate-800 font-semibold text-sm hover:underline flex items-center cursor-pointer"
+        class="font-semibold text-sm hover:underline flex items-center cursor-pointer text-[color:var(--color-text)]"
         @click="onClick"
       >
         Dettagli

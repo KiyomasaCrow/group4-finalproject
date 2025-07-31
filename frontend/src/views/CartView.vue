@@ -64,7 +64,10 @@ h1 {
   text-align: center;
   margin-bottom: 2rem;
   color: #333;
+  font-size: 2rem; /* aumentata da default a 2.8rem */
+  font-weight: 600;
 }
+
 
 .cart-list {
   display: flex;
@@ -73,9 +76,10 @@ h1 {
 }
 
 .cart-card {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
+  color: var(--text-color);
   padding: 1.2rem 1.5rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   display: flex;
@@ -91,12 +95,12 @@ h1 {
 .product-info h3 {
   margin: 0;
   font-size: 1.2rem;
-  color: #222;
+  color: var(--text-color);
 }
 
 .product-info p {
   margin: 0.3rem 0;
-  color: #555;
+  color: var(--text-muted);
 }
 
 .actions {
@@ -148,12 +152,12 @@ h1 {
   text-align: right;
   font-size: 2rem;
   font-weight: bold;
-  color: #222;
+  color: var(--text-color);
 }
 
 .empty-message {
   text-align: center;
   font-size: 1.1rem;
-  color: #666;
+  color: var(--text-muted);
 }
 </style>

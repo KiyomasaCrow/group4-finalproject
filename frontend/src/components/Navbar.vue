@@ -18,6 +18,9 @@
         <button @click="$router.push('/cart')" class="nav-button">
           🛒 Carrello ({{ cartCount }})
         </button>
+        <button @click="toggleDarkMode" class="nav-button" title="Toggle Dark Mode">
+          {{ isDark ? '☀️' : '🌙' }}
+        </button>
       </div>
     </nav>
 
@@ -29,15 +32,23 @@
 import { ref } from 'vue'
 import { useCart } from '@/components/cart/useCart'
 import ThreeDText from '@/components/3dtext.vue'
+import { useTheme } from '@/composable/useTheme'
 
 const searchQuery = ref<string>('')
 const { cartCount } = useCart()
+
+const { isDark, toggleTheme } = useTheme()
+
+function toggleDarkMode() {
+  toggleTheme()
+}
 </script>
 
 <style scoped>
 .nav-bar {
   position: relative;
-  background-color: #f0f0f0;
+  background-color: var(--card-bg);
+  color: var(--text-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,9 +70,9 @@ const { cartCount } = useCart()
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  height: 100%;
-  width: 300px;
-  pointer-events: none; /* non blocca click */
+  height: 100px;
+  width: 250px;
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,9 +83,9 @@ const { cartCount } = useCart()
   background: none;
   border: none;
   cursor: pointer;
-  color: #423d3d;
+  color: var(--text-color);
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 1.2rem;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
 }

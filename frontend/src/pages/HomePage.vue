@@ -9,5 +9,5 @@
 
 <script setup lang="ts">
 import Navbar from '@/components/Navbar.vue'
-import ThreeWelcome from '@/components/ThreeWelcome.vue'
+/* import ThreeWelcome from '@/components/ThreeWelcome.vue' */
 </script>

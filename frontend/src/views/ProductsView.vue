@@ -1,12 +1,12 @@
 <template>
-  <div class="p-5">
+  <div class="p-5 min-h-screen bg-[color:var(--color-background)] transition-colors">
     <div class="flex gap-2 justify-center">
-      <h2 class="text-3xl font-semibold ml-3">Esplora prodotti</h2>
+      <h2 class="text-3xl font-semibold ml-3 text-[color:var(--color-text)]">Esplora prodotti</h2>
 
       <!-- Campo ricerca -->
       <div class="flex gap-2 items-center">
         <input
-          class="input-search"
+          class="input-search bg-[color:var(--color-background-soft)] text-[color:var(--color-text)] border border-[color:var(--color-border)]"
           v-model="searchQuery"
           placeholder="Cerca un prodotto..."
           @keyup.enter="searchProduct()"
@@ -23,10 +23,10 @@
     </div>
 
     <!-- Se c'è una ricerca, mostra solo quel prodotto -->
-    <div v-if="route.query.name">
+    <div v-if="route.query.name" class="text-[color:var(--color-text)]">
       <SingleProduct v-if="singleProduct" :product="singleProduct" />
 
-      <div v-else class="text-center text-gray-500">
+      <div v-else class="text-center text-[color:var(--color-border)]">
         <p class="py-5">Nessun prodotto trovato</p>
       </div>
     </div>
@@ -44,12 +44,13 @@
           :onClick="() => searchProduct(product.name)"
         />
       </div>
-      <div v-else class="text-center text-gray-500">
+      <div v-else class="text-center text-[color:var(--color-border)]">
         <p>Nessun prodotto trovato</p>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, watch, onUnmounted } from 'vue'
@@ -135,9 +136,12 @@ onUnmounted(() => {
   border-radius: 6px;
   outline: none;
   transition: border-color 0.2s ease;
+  background-color: var(--color-background-soft);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
 .input-search:focus {
-  border-color: #4b5563;
+  border-color: var(--color-border-hover);
 }
 </style>

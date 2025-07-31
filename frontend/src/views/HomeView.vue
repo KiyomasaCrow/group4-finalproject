@@ -38,19 +38,20 @@
 }
 
 .textbox {
-  background-color: #f8f8f8;
+  background-color: var(--card-bg);
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  color: var(--text-color);
 }
 
 .textbox h2 {
   margin-bottom: 0.8rem;
-  color: #333;
+  color: var(--text-color);
 }
 
 .textbox p, .textbox ul {
-  color: #555;
+  color: var(--text-muted);
   line-height: 1.5;
 }
 
