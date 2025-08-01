@@ -42,7 +42,7 @@
     </div>
 
     <button
-      class="mt-4 button-search bg-cyan-700 hover:bg-cyan-900 text-white font-semibold py-2 px-4 rounded"
+      class="mt-4 button-search bg-cyan-700 hover:bg-cyan-900 text-white font-semibold py-2 px-4 rounded cursor-pointer"
       @click="onAddClick"
     >
       Aggiungi al carrello

@@ -30,3 +30,5 @@ export function useTheme() {
 
   return { isDark, toggleTheme }
 }
+
+document.documentElement.style.setProperty('--bg-color', isDark.value ? '#121212' : '#ffffff')
