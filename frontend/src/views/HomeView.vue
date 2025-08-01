@@ -7,9 +7,12 @@
 
     <div class="textbox description-box">
       <h2>Descrizione del progetto</h2>
-      <p>
+      <p class="justified-text">
         Questo progetto è un'applicazione e-commerce sviluppata con Vue e TypeScript,
         che permette agli utenti di navigare tra diversi prodotti tech e gestire un carrello digitale.
+        Vogliamo ringraziare tutti coloro che hanno reso possibile questo progetto, i nostri docenti Michael Bagnoli ed Edoardo Del Sarto.<br>
+        <br>
+        Un ringraziamento speciale va ad Edoardo de Rosa che ha trovato il tempo di aiutare il nostro team nel momento del bisogno.
       </p>
     </div>
 
@@ -58,5 +61,9 @@
 .textbox ul {
   padding-left: 1.2rem;
   list-style-type: disc;
+}
+
+.justified-text {
+  text-align: justify;
 }
 </style>

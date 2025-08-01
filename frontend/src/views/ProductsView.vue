@@ -42,7 +42,7 @@
           :onClick="() => searchProduct(product.name)"
         />
       </div>
-      <div v-else class="text-center text-[color:var(--color-border)]">
+      <div v-else class="text-center text-[color:var(--text-color)]">
         <p>Nessun prodotto trovato</p>
       </div>
     </div>
