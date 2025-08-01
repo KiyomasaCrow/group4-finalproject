@@ -8,23 +8,39 @@ const {
   increaseQuantity,
   decreaseQuantity,
   removeFromCart,
-  totalPrice
+  totalPrice,
+  clearCart
 } = useCart()
 
-
-
 const formatPrice = (price: number) => price.toFixed(2)
+
+// Stato per il messaggio di acquisto
+const purchaseMessage = ref<string>('')
+const purchasedProducts = ref<Array<{ name: string, quantity: number }>>([])
+const purchaseTotal = ref<number>(0)
+
+function buyNow() {
+  if (cart.value.length === 0) return
+  // Crea elenco prodotti acquistati
+  purchasedProducts.value = cart.value.map((item: any) => ({
+    name: item.product.name,
+    quantity: item.quantity
+  }))
+  purchaseTotal.value = cart.value.reduce((acc: number, item: any) => acc + item.product.price * item.quantity, 0)
+  purchaseMessage.value = 'Complimenti per il tuo acquisto!'
+  clearCart()
+}
 </script>
 
 <template>
   <div class="cart">
     <h1>Carrello</h1>
 
-    <div v-if="cart.length === 0" class="empty-message">
+    <div v-if="cart.length === 0 && !purchaseMessage" class="empty-message">
       <p>Il carrello è vuoto.</p>
     </div>
 
-    <div v-else class="cart-list">
+    <div v-else-if="!purchaseMessage" class="cart-list">
       <div
         v-for="item in cart"
         :key="item.product.product_id"
@@ -53,6 +69,21 @@ const formatPrice = (price: number) => price.toFixed(2)
       <div class="total-price">
         Totale carrello: € {{ formatPrice(totalPrice) }}
       </div>
+
+      <div class="purchase-section">
+        <button class="buy-now-btn" @click="buyNow">
+          Acquista Ora
+        </button>
+      </div>
+    </div>
+    <div v-else class="purchase-message">
+      <p>{{ purchaseMessage }}</p>
+      <p class="font-bold">Totale speso: €{{ formatPrice(purchaseTotal) }}</p>
+      <ul>
+        <li v-for="prod in purchasedProducts" :key="prod.name">
+          {{ prod.name }} x{{ prod.quantity }}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -162,6 +193,88 @@ h1 {
 .empty-message {
   text-align: center;
   font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.purchase-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.buy-now-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.3s;
+}
+
+.buy-now-btn:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.buy-btn {
+  display: block;
+  margin: 2rem auto 0 auto;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.buy-btn:hover {
+  background-color: var(--card-hover-bg);
+}
+
+.purchase-message {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.purchase-message ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+
+.purchase-message li {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.purchased-products {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.purchased-products h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.purchased-products ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.purchased-products li {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
   color: var(--text-color);
 }
 </style>
