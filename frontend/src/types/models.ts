@@ -25,3 +25,8 @@ export type Order = {
   deliveryDate: string // ISO string o formattata
   userId: number
 }
+
+export type LoginResponse = {
+  message: string
+  user: User
+}

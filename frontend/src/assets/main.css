@@ -1,19 +1,27 @@
-
-
 :root {
-  --body-bg: #dbe8f7;              /* slate-50 */
-  --card-bg: #c2d0df;              /* slate-100 */
-  --card-hover-bg: #a4afbe;        /* slate-200 */
-  --text-color: #212a36;           /* slate-700 */
-  --border-color: #7a838d;         /* slate-200 */
+  --body-bg: #dbe8f7;
+    /* slate-50 */
+    --card-bg: #c2d0df;
+    /* slate-100 */
+    --card-hover-bg: #a4afbe;
+    /* slate-200 */
+    --text-color: #212a36;
+    /* slate-700 */
+    --border-color: #7a838d;
+    /* slate-200 */
 }
 
 html.dark {
-  --body-bg: #22344e;              /* darkmode: blu chiaro */
-  --card-bg: #1e293b;              /* slate-800 */
-  --card-hover-bg: #334155;        /* slate-700 */
-  --text-color: #f1f5f9;           /* slate-100 */
-  --border-color: #475569;         /* slate-600 */
+  --body-bg: #22344e;
+    /* darkmode: blu chiaro */
+    --card-bg: #1e293b;
+    /* slate-800 */
+    --card-hover-bg: #334155;
+    /* slate-700 */
+    --text-color: #f1f5f9;
+    /* slate-100 */
+    --border-color: #475569;
+    /* slate-600 */
 }
 
 body {

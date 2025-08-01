@@ -1,4 +1,4 @@
-import type { User } from '@/types/models'
+import type { User, LoginResponse } from '@/types/models'
 import axios from 'axios'
 
 const ACCOUNT_URL = 'http://localhost:3000/api/account'
@@ -24,9 +24,9 @@ export const signIn = async (name: string, email: string, password: string): Pro
  * @description Login dell'utente
  * @param email Email dell'utente
  * @param password Password dell'utente
- * @returns Utente loggato
+ * @returns Risposta del login con utente
  */
-export const login = async (email: string, password: string): Promise<User> => {
+export const login = async (email: string, password: string): Promise<LoginResponse> => {
   try {
     const response = await axios.post(`${ACCOUNT_URL}/login`, { email, password })
     return response.data

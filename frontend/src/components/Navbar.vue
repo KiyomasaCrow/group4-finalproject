@@ -21,6 +21,27 @@
         <button @click="toggleDarkMode" class="nav-button" title="Toggle Dark Mode">
           {{ isDark ? '☀️' : '🌙' }}
         </button>
+
+        <div class="flex items-center gap-2">
+          <button
+            class="nav-button user-button flex items-center gap-2"
+            @click="currentUser ? null : router.push('/login')"
+          >
+            <span class="material-icons">
+              {{ currentUser ? 'person' : 'login' }}
+            </span>
+            {{ currentUser ? `Bentornato, ${currentUser.name}` : 'Login' }}
+          </button>
+
+          <button
+            class="nav-button logout-button flex items-center gap-2"
+            @click="currentUser ? handleLogout() : null"
+            :disabled="!currentUser"
+          >
+            <span class="material-icons"> logout </span>
+            Logout
+          </button>
+        </div>
       </div>
     </nav>
 
@@ -29,18 +50,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useCart } from '@/components/cart/useCart'
 import ThreeDText from '@/components/3dtext.vue'
 import { useTheme } from '@/composable/useTheme'
+import { useUser } from '@/composable/useUser'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const searchQuery = ref<string>('')
 const { cartCount } = useCart()
-
+const { currentUser, initUser, clearUser } = useUser()
 const { isDark, toggleTheme } = useTheme()
 
-function toggleDarkMode() {
+// Inizializza l'utente al mount del componente
+onMounted(() => {
+  initUser()
+})
+
+// funzione per cambiare il tema
+const toggleDarkMode = () => {
   toggleTheme()
+}
+
+// funzione per fare il logout
+const handleLogout = () => {
+  clearUser()
+  router.push('/logout')
 }
 </script>
 
@@ -94,5 +130,34 @@ function toggleDarkMode() {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
+}
+
+.user-button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.user-button:hover {
+  background-color: var(--border-color);
+  text-decoration: none;
+}
+
+.logout-button {
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.logout-button:hover:not(:disabled) {
+  background-color: var(--card-hover-bg);
+  text-decoration: none;
+}
+
+.logout-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
 }
 </style>

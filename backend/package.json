@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node dist/app.js",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "hash-passwords": "ts-node utils/hashPasswords.ts"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -22,6 +23,7 @@
     "@types/express-session": "^1.18.2",
     "@types/node": "^20.0.0",
     "eslint": "^9.30.1",
+    "ts-node": "^10.9.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1"
   }

@@ -1,22 +1,15 @@
 <script setup lang="ts">
-
 import { useCart } from '@/components/cart/useCart'
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 
-const {
-  cart,
-  increaseQuantity,
-  decreaseQuantity,
-  removeFromCart,
-  totalPrice,
-  clearCart
-} = useCart()
+const { cart, increaseQuantity, decreaseQuantity, removeFromCart, totalPrice, clearCart } =
+  useCart()
 
 const formatPrice = (price: number) => price.toFixed(2)
 
 // Stato per il messaggio di acquisto
 const purchaseMessage = ref<string>('')
-const purchasedProducts = ref<Array<{ name: string, quantity: number }>>([])
+const purchasedProducts = ref<Array<{ name: string; quantity: number }>>([])
 const purchaseTotal = ref<number>(0)
 
 function buyNow() {
@@ -24,9 +17,12 @@ function buyNow() {
   // Crea elenco prodotti acquistati
   purchasedProducts.value = cart.value.map((item: any) => ({
     name: item.product.name,
-    quantity: item.quantity
+    quantity: item.quantity,
   }))
-  purchaseTotal.value = cart.value.reduce((acc: number, item: any) => acc + item.product.price * item.quantity, 0)
+  purchaseTotal.value = cart.value.reduce(
+    (acc: number, item: any) => acc + item.product.price * item.quantity,
+    0,
+  )
   purchaseMessage.value = 'Complimenti per il tuo acquisto!'
   clearCart()
 }
@@ -41,11 +37,7 @@ function buyNow() {
     </div>
 
     <div v-else-if="!purchaseMessage" class="cart-list">
-      <div
-        v-for="item in cart"
-        :key="item.product.product_id"
-        class="cart-card"
-      >
+      <div v-for="item in cart" :key="item.product.product_id" class="cart-card">
         <div class="card-content">
           <div class="product-info">
             <h3>{{ item.product.name }}</h3>
@@ -66,14 +58,10 @@ function buyNow() {
         </div>
       </div>
 
-      <div class="total-price">
-        Totale carrello: € {{ formatPrice(totalPrice) }}
-      </div>
+      <div class="total-price">Totale carrello: € {{ formatPrice(totalPrice) }}</div>
 
       <div class="purchase-section">
-        <button class="buy-now-btn" @click="buyNow">
-          Acquista Ora
-        </button>
+        <button class="buy-now-btn" @click="buyNow">Acquista Ora</button>
       </div>
     </div>
     <div v-else class="purchase-message">
@@ -102,7 +90,6 @@ h1 {
   font-size: 2rem; /* aumentata da default a 2.8rem */
   font-weight: 600;
 }
-
 
 .cart-list {
   display: flex;
@@ -151,7 +138,7 @@ h1 {
   gap: 0.5rem;
 }
 
- .quantity-control button {
+.quantity-control button {
   background-color: var(--card-bg);
   border: none;
   padding: 0.3rem 0.7rem;
@@ -161,7 +148,7 @@ h1 {
   transition: background 0.2s;
 }
 
- .quantity-control button:hover {
+.quantity-control button:hover {
   background-color: var(--card-hover-bg);
 }
 
@@ -175,7 +162,7 @@ h1 {
   font-size: 1rem;
   transition: background 0.2s;
   width: 100px;
-  height:40px;
+  height: 40px;
 }
 
 .remove-btn:hover {
