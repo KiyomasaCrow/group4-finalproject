@@ -30,7 +30,7 @@
             <span class="material-icons">
               {{ currentUser ? 'person' : 'login' }}
             </span>
-            {{ currentUser ? `Bentornato, ${currentUser.name}` : 'Login' }}
+            {{ currentUser ? `${currentUser.name}` : 'Login' }}
           </button>
 
           <button

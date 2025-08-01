@@ -14,6 +14,11 @@
         <label for="password">Password</label>
         <input type="password" placeholder="Password" id="password" v-model="password" />
 
+        <!-- Messaggio di errore -->
+        <div v-if="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
         <button type="submit">Login</button>
 
         <!-- Separatore -->
@@ -41,15 +46,26 @@ const router = useRouter()
 const { setUser } = useUser()
 const email = ref('')
 const password = ref('')
+const errorMessage = ref('')
 
 const loginUser = async (email: string, password: string) => {
+  errorMessage.value = '' // Reset error message
+
   try {
     const response = await login(email, password)
-    console.log('response', response)
     setUser(response.user)
     router.push('/')
-  } catch (error) {
+  } catch (error: any) {
     console.error('Errore nel login:', error)
+
+    // Estrai il messaggio di errore dal backend
+    if (error.response?.data?.message) {
+      errorMessage.value = error.response.data.message
+    } else if (error.message) {
+      errorMessage.value = error.message
+    } else {
+      errorMessage.value = 'Errore durante il login. Riprova.'
+    }
   }
 }
 
@@ -73,13 +89,15 @@ const goToSignup = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .login-container {
   position: relative;
   width: 100%;
   max-width: 430px;
-  height: 520px;
+  min-height: 520px;
+  height: auto;
 }
 
 .background {
@@ -110,7 +128,7 @@ const goToSignup = () => {
 }
 
 form {
-  height: 600px;
+  min-height: 600px;
   width: 100%;
   max-width: 400px;
   background-color: rgba(255, 255, 255, 0.13);
@@ -123,6 +141,9 @@ form {
   border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
   padding: 50px 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 form * {
@@ -164,7 +185,7 @@ input {
 }
 
 button {
-  margin-top: 50px;
+  margin-top: 30px;
   width: 100%;
   background-color: #ffffff;
   color: #080710;
@@ -240,6 +261,100 @@ button:hover {
   }
   50% {
     transform: scale(1.1);
+  }
+}
+
+/* Messaggio di errore */
+.error-message {
+  background-color: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #fca5a5;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 15px 0;
+  font-size: 14px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-page {
+    padding: 10px;
+  }
+
+  .login-container {
+    max-width: 100%;
+    min-height: auto;
+  }
+
+  form {
+    min-height: auto;
+    max-width: 100%;
+    padding: 30px 20px;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+
+  form h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  input {
+    height: 45px;
+    font-size: 16px; /* Previene zoom su iOS */
+  }
+
+  button {
+    padding: 12px 0;
+    font-size: 16px;
+  }
+
+  .divider {
+    margin: 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 5px;
+  }
+
+  form {
+    padding: 25px 15px;
+  }
+
+  form h3 {
+    font-size: 24px;
+  }
+
+  label {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+
+  input {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 10px 0;
+    font-size: 14px;
   }
 }
 </style>

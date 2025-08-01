@@ -20,6 +20,11 @@
           required
         />
 
+        <!-- Messaggio di errore -->
+        <div v-if="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
         <button type="submit" :disabled="!isFormValid || isLoading">
           {{ isLoading ? 'Registrazione...' : 'Registrati' }}
         </button>
@@ -57,12 +62,15 @@ const isFormValid = computed(() => {
   return name.value.trim() !== '' && email.value.trim() !== '' && password.value.length >= 6
 })
 
+const errorMessage = ref('')
+
 const signupUser = async (name: string, email: string, password: string) => {
   if (!isFormValid.value) {
-    alert('Per favore compila tutti i campi correttamente.')
+    errorMessage.value = 'Per favore compila tutti i campi correttamente.'
     return
   }
 
+  errorMessage.value = '' // Reset error message
   isLoading.value = true
 
   try {
@@ -77,9 +85,17 @@ const signupUser = async (name: string, email: string, password: string) => {
 
     // Reindirizza alla home
     router.push('/')
-  } catch (error) {
+  } catch (error: any) {
     console.error('Errore nella registrazione:', error)
-    alert('Errore durante la registrazione. Riprova.')
+
+    // Estrai il messaggio di errore dal backend
+    if (error.response?.data?.message) {
+      errorMessage.value = error.response.data.message
+    } else if (error.message) {
+      errorMessage.value = error.message
+    } else {
+      errorMessage.value = 'Errore durante la registrazione. Riprova.'
+    }
   } finally {
     isLoading.value = false
   }
@@ -105,13 +121,15 @@ const goToLogin = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .signup-container {
   position: relative;
   width: 100%;
   max-width: 430px;
-  height: 640px;
+  min-height: 640px;
+  height: auto;
 }
 
 .background {
@@ -123,7 +141,7 @@ const goToLogin = () => {
 }
 
 form {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   max-width: 400px;
   background-color: rgba(255, 255, 255, 0.13);
@@ -136,6 +154,9 @@ form {
   border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
   padding: 50px 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 form * {
@@ -266,6 +287,100 @@ button:disabled {
   }
   50% {
     transform: scale(1.1);
+  }
+}
+
+/* Messaggio di errore */
+.error-message {
+  background-color: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #fca5a5;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 15px 0;
+  font-size: 14px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signup-page {
+    padding: 10px;
+  }
+
+  .signup-container {
+    max-width: 100%;
+    min-height: auto;
+  }
+
+  form {
+    min-height: auto;
+    max-width: 100%;
+    padding: 30px 20px;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+
+  form h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  input {
+    height: 45px;
+    font-size: 16px; /* Previene zoom su iOS */
+  }
+
+  button {
+    padding: 12px 0;
+    font-size: 16px;
+  }
+
+  .divider {
+    margin: 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-page {
+    padding: 5px;
+  }
+
+  form {
+    padding: 25px 15px;
+  }
+
+  form h3 {
+    font-size: 24px;
+  }
+
+  label {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+
+  input {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 10px 0;
+    font-size: 14px;
   }
 }
 </style>
