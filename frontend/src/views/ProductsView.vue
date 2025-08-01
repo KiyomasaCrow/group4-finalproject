@@ -1,13 +1,13 @@
 <template>
   <div class="p-5 min-h-screen bg-[color:var(--color-background)] transition-colors">
     <div class="flex gap-2 justify-center">
-      <h2 class="text-3xl font-semibold ml-3" style="color: var(--text-color);">Esplora prodotti</h2>
+      <h2 class="text-3xl font-semibold ml-3" style="color: var(--text-color)">Esplora prodotti</h2>
 
       <!-- Campo ricerca -->
       <div class="flex gap-2 items-center">
         <template v-if="!route.query.name">
           <input
-            class="input-search bg-[color:var(--color-background-soft)] text-[color:var(--color-text)] border border-[color:var(--color-border)]"
+            class="input-search bg-[color:var(--card-bg)] text-[color:var(--text-color)] border border-[color:var(--border-color)]"
             v-model="searchQuery"
             placeholder="Cerca un prodotto..."
             @keyup.enter="searchProduct()"
@@ -24,7 +24,7 @@
     <div v-if="route.query.name" class="text-[color:var(--color-text)]">
       <SingleProduct v-if="singleProduct" :product="singleProduct" />
 
-      <div v-else class="text-center text-[color:var(--color-border)]">
+      <div v-else class="text-center text-[color:var(--text-color)]">
         <p class="py-5">Nessun prodotto trovato</p>
       </div>
     </div>
@@ -42,13 +42,12 @@
           :onClick="() => searchProduct(product.name)"
         />
       </div>
-      <div v-else class="text-center text-[color:var(--color-border)]">
+      <div v-else class="text-center text-[color:var(--text-color)]">
         <p>Nessun prodotto trovato</p>
       </div>
     </div>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref, watch, onUnmounted } from 'vue'
@@ -94,48 +93,59 @@ const resetSearch = () => {
   singleProduct.value = null
 }
 
-
 // Ricerca reattiva: aggiorna la lista prodotti solo se non si sta visualizzando il singolo prodotto
-watch(searchQuery, async (query) => {
-  if (!route.query.name) {
-    if (query && query.trim() !== '') {
-      try {
-        // Cerca solo prodotti che contengono la query nel nome
-        const productsFound = await getAllProducts()
-        products.value = productsFound.filter(p => p.name.toLowerCase().includes(query.toLowerCase()))
+watch(
+  searchQuery,
+  async (query) => {
+    if (!route.query.name) {
+      if (query && query.trim() !== '') {
+        try {
+          // Cerca solo prodotti che contengono la query nel nome
+          const productsFound = await getAllProducts()
+          products.value = productsFound.filter((p) =>
+            p.name.toLowerCase().includes(query.toLowerCase()),
+          )
+          singleProduct.value = null
+        } catch (error) {
+          console.error('Errore nel recupero dei prodotti:', error)
+          products.value = []
+          singleProduct.value = null
+        }
+      } else {
+        await getProducts()
         singleProduct.value = null
+      }
+    }
+  },
+  { immediate: true },
+)
+
+// AGGIUNTA: watcher sulla query del router per mostrare il singolo prodotto
+watch(
+  () => route.query.name,
+  async (name) => {
+    if (typeof name === 'string' && name.trim() !== '') {
+      try {
+        const productsFound = await getProductByName(name)
+        if (Array.isArray(productsFound)) {
+          // Cerca il prodotto con nome esatto
+          const found = productsFound.find((p) => p.name === name)
+          singleProduct.value = found || productsFound[0] || null
+        } else if (productsFound) {
+          singleProduct.value = productsFound
+        } else {
+          singleProduct.value = null
+        }
       } catch (error) {
-        products.value = []
+        console.error('Errore nel recupero del prodotto:', error)
         singleProduct.value = null
       }
     } else {
-      await getProducts()
       singleProduct.value = null
     }
-  }
-}, { immediate: true })
-
-// AGGIUNTA: watcher sulla query del router per mostrare il singolo prodotto
-watch(() => route.query.name, async (name) => {
-  if (typeof name === 'string' && name.trim() !== '') {
-    try {
-      const productsFound = await getProductByName(name)
-      if (Array.isArray(productsFound)) {
-        // Cerca il prodotto con nome esatto
-        const found = productsFound.find(p => p.name === name)
-        singleProduct.value = found || productsFound[0] || null
-      } else if (productsFound) {
-        singleProduct.value = productsFound
-      } else {
-        singleProduct.value = null
-      }
-    } catch (error) {
-      singleProduct.value = null
-    }
-  } else {
-    singleProduct.value = null
-  }
-}, { immediate: true })
+  },
+  { immediate: true },
+)
 
 // funzione per resettare la ricerca quando si esce dalla pagina di ricerca
 onUnmounted(() => {
@@ -149,21 +159,21 @@ onUnmounted(() => {
   flex: 1;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   outline: none;
   transition: border-color 0.2s ease;
-  background-color: var(--color-background-soft);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
- }
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
 
- .input-search::placeholder {
-   color: var(--text-color);
-   opacity: 0.7;
+.input-search::placeholder {
+  color: var(--text-color);
+  opacity: 0.7;
 }
 
 .input-search:focus {
-  border-color: var(--color-border-hover);
+  border-color: var(--border-color);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
 }
 </style>

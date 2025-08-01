@@ -1,17 +1,7 @@
 <script setup lang="ts">
-
 import { useCart } from '@/components/cart/useCart'
-import { ref, watchEffect } from 'vue'
 
-const {
-  cart,
-  increaseQuantity,
-  decreaseQuantity,
-  removeFromCart,
-  totalPrice
-} = useCart()
-
-
+const { cart, increaseQuantity, decreaseQuantity, removeFromCart, totalPrice } = useCart()
 
 const formatPrice = (price: number) => price.toFixed(2)
 </script>
@@ -25,11 +15,7 @@ const formatPrice = (price: number) => price.toFixed(2)
     </div>
 
     <div v-else class="cart-list">
-      <div
-        v-for="item in cart"
-        :key="item.product.product_id"
-        class="cart-card"
-      >
+      <div v-for="item in cart" :key="item.product.product_id" class="cart-card">
         <div class="card-content">
           <div class="product-info">
             <h3>{{ item.product.name }}</h3>
@@ -50,9 +36,7 @@ const formatPrice = (price: number) => price.toFixed(2)
         </div>
       </div>
 
-      <div class="total-price">
-        Totale carrello: € {{ formatPrice(totalPrice) }}
-      </div>
+      <div class="total-price">Totale carrello: {{ formatPrice(totalPrice) }} €</div>
     </div>
   </div>
 </template>
@@ -71,7 +55,6 @@ h1 {
   font-size: 2rem; /* aumentata da default a 2.8rem */
   font-weight: 600;
 }
-
 
 .cart-list {
   display: flex;
@@ -120,7 +103,7 @@ h1 {
   gap: 0.5rem;
 }
 
- .quantity-control button {
+.quantity-control button {
   background-color: var(--card-bg);
   border: none;
   padding: 0.3rem 0.7rem;
@@ -130,7 +113,7 @@ h1 {
   transition: background 0.2s;
 }
 
- .quantity-control button:hover {
+.quantity-control button:hover {
   background-color: var(--card-hover-bg);
 }
 
@@ -144,7 +127,7 @@ h1 {
   font-size: 1rem;
   transition: background 0.2s;
   width: 100px;
-  height:40px;
+  height: 40px;
 }
 
 .remove-btn:hover {

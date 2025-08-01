@@ -7,9 +7,14 @@
 
     <div class="textbox description-box">
       <h2>Descrizione del progetto</h2>
-      <p>
-        Questo progetto è un'applicazione e-commerce sviluppata con Vue e TypeScript,
-        che permette agli utenti di navigare tra diversi prodotti tech e gestire un carrello digitale.
+      <p class="justified-text">
+        Questo progetto è un'applicazione e-commerce sviluppata con Vue e TypeScript, che permette
+        agli utenti di navigare tra diversi prodotti tech e gestire un carrello digitale. Vogliamo
+        ringraziare tutti coloro che hanno reso possibile questo progetto, i nostri docenti Michael
+        Bagnoli ed Edoardo Del Sarto.<br />
+        <br />
+        Un ringraziamento speciale va ad Edoardo de Rosa che ha trovato il tempo di aiutare il
+        nostro team nel momento del bisogno.
       </p>
     </div>
 
@@ -50,7 +55,8 @@
   color: var(--text-color);
 }
 
-.textbox p, .textbox ul {
+.textbox p,
+.textbox ul {
   color: var(--text-muted);
   line-height: 1.5;
 }

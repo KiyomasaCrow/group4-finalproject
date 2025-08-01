@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="product"
-    class="single-product-card"
-  >
+  <div v-if="product" class="single-product-card">
     <p class="product-title">Nome: {{ product.name }}</p>
     <p class="product-desc">Descrizione: {{ product.description }}</p>
     <p class="product-price">Prezzo: {{ product.price }} €</p>
@@ -27,10 +24,12 @@ defineProps<{
   color: var(--text-color);
   border: 2px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 1.5rem;
   margin: 1rem;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 .product-title {
   color: var(--text-color);
