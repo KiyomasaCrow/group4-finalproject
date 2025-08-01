@@ -26,7 +26,13 @@ export type Order = {
   userId: number
 }
 
+// tipi di risposta per il login e la registrazione
 export type LoginResponse = {
+  message: string
+  user: User
+}
+
+export type SignupResponse = {
   message: string
   user: User
 }

@@ -6,6 +6,7 @@ import CartView from '@/views/CartView.vue'
 import UsersDetails from '@/components/users/UsersDetails.vue'
 import LoginView from '@/views/LoginView.vue'
 import LogoutPage from '@/pages/LogoutPage.vue'
+import SignUpView from '@/views/SignUpView.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
@@ -14,6 +15,7 @@ const routes = [
   { path: '/users/:id', name: 'UserDetails', component: UsersDetails },
   { path: '/cart', name: 'Cart', component: CartView },
   { path: '/login', name: 'Login', component: LoginView },
+  { path: '/sign-up', name: 'SignUp', component: SignUpView },
   { path: '/logout', name: 'Logout', component: LogoutPage },
 ]
 

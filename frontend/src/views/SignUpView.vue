@@ -1,30 +1,37 @@
 <template>
-  <div class="login-page">
-    <div class="login-container">
-      <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-      </div>
-      <form @submit.prevent="loginUser(email, password)">
-        <h3>Login</h3>
+  <div class="signup-page">
+    <div class="signup-container">
+      <div class="background"></div>
+      <form @submit.prevent="signupUser(name, email, password)">
+        <h3>Registrazione</h3>
+
+        <label for="name">Nome completo</label>
+        <input type="text" placeholder="Il tuo nome" id="name" v-model="name" required />
 
         <label for="email">Email</label>
-        <input type="text" placeholder="Email or Phone" id="email" v-model="email" />
+        <input type="email" placeholder="La tua email" id="email" v-model="email" required />
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password" v-model="password" />
+        <input
+          type="password"
+          placeholder="La tua password"
+          id="password"
+          v-model="password"
+          required
+        />
 
-        <button type="submit">Login</button>
+        <button type="submit" :disabled="!isFormValid || isLoading">
+          {{ isLoading ? 'Registrazione...' : 'Registrati' }}
+        </button>
 
         <!-- Separatore -->
         <div class="divider">
           <span>oppure</span>
         </div>
 
-        <!-- Bottone registrazione -->
-        <button type="button" class="signup-button" @click="goToSignup">
-          <span class="signup-icon">✨</span>
-          Registrati
+        <!-- Bottone login -->
+        <button type="button" class="login-button" @click="goToLogin">
+          Hai già un account? Accedi
         </button>
       </form>
     </div>
@@ -32,29 +39,54 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { login } from '@/services/accountApi'
+import { ref, computed } from 'vue'
+import { signIn } from '@/services/accountApi'
 import { useRouter } from 'vue-router'
 import { useUser } from '@/composable/useUser'
 
 const router = useRouter()
 const { setUser } = useUser()
+
+const name = ref('')
 const email = ref('')
 const password = ref('')
+const isLoading = ref(false)
 
-const loginUser = async (email: string, password: string) => {
+// Validazione del form
+const isFormValid = computed(() => {
+  return name.value.trim() !== '' && email.value.trim() !== '' && password.value.length >= 6
+})
+
+const signupUser = async (name: string, email: string, password: string) => {
+  if (!isFormValid.value) {
+    alert('Per favore compila tutti i campi correttamente.')
+    return
+  }
+
+  isLoading.value = true
+
   try {
-    const response = await login(email, password)
-    console.log('response', response)
+    const response = await signIn(name, email, password)
+    console.log('Utente registrato:', response)
+
+    // Salva solo la proprietà user dal response
     setUser(response.user)
+
+    // Piccolo delay per assicurarsi che il composable sia aggiornato
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    // Reindirizza alla home
     router.push('/')
   } catch (error) {
-    console.error('Errore nel login:', error)
+    console.error('Errore nella registrazione:', error)
+    alert('Errore durante la registrazione. Riprova.')
+  } finally {
+    isLoading.value = false
   }
 }
 
-const goToSignup = () => {
-  router.push('/sign-up')
+const goToLogin = () => {
+  router.push('/login')
 }
 </script>
 
@@ -67,7 +99,7 @@ const goToSignup = () => {
   box-sizing: border-box;
 }
 
-.login-page {
+.signup-page {
   min-height: 100vh;
   background-color: #080710;
   display: flex;
@@ -75,11 +107,11 @@ const goToSignup = () => {
   justify-content: center;
 }
 
-.login-container {
+.signup-container {
   position: relative;
   width: 100%;
   max-width: 430px;
-  height: 520px;
+  height: 640px;
 }
 
 .background {
@@ -90,27 +122,8 @@ const goToSignup = () => {
   left: 0;
 }
 
-.background .shape {
-  height: 200px;
-  width: 200px;
-  position: absolute;
-  border-radius: 50%;
-}
-
-.shape:first-child {
-  background: linear-gradient(#1845ad, #23a2f6);
-  left: -80px;
-  top: -80px;
-}
-
-.shape:last-child {
-  background: linear-gradient(to right, #ff512f, #f09819);
-  right: -30px;
-  bottom: -80px;
-}
-
 form {
-  height: 600px;
+  height: 100%;
   width: 100%;
   max-width: 400px;
   background-color: rgba(255, 255, 255, 0.13);
@@ -138,18 +151,19 @@ form h3 {
   font-weight: 500;
   line-height: 42px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 label {
   display: block;
-  margin-top: 30px;
+  margin-top: 20px;
   font-size: 16px;
   font-weight: 500;
 }
 
 input {
   display: block;
-  height: 50px;
+  height: 45px;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.07);
   border-radius: 3px;
@@ -157,6 +171,12 @@ input {
   margin-top: 8px;
   font-size: 14px;
   font-weight: 300;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 ::placeholder {
@@ -164,7 +184,7 @@ input {
 }
 
 button {
-  margin-top: 50px;
+  margin-top: 30px;
   width: 100%;
   background-color: #ffffff;
   color: #080710;
@@ -176,16 +196,22 @@ button {
   transition: all 0.3s ease;
 }
 
-button:hover {
+button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Separatore */
 .divider {
   position: relative;
   text-align: center;
-  margin: 30px 0;
+  margin: 25px 0;
 }
 
 .divider::before {
@@ -207,8 +233,8 @@ button:hover {
   z-index: 1;
 }
 
-/* Bottone registrazione */
-.signup-button {
+/* Bottone login */
+.login-button {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
@@ -222,13 +248,13 @@ button:hover {
   transition: all 0.3s ease;
 }
 
-.signup-button:hover {
+.login-button:hover {
   background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
-.signup-icon {
+.login-icon {
   font-size: 18px;
   animation: sparkle 2s ease-in-out infinite;
 }
